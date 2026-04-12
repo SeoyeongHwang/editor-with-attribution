@@ -27,21 +27,39 @@ const RightPanel = ({ onClose }: RightPanelProps) => {
     }
   }, [history, isGenerating]);
 
-  const handleRequest = () => {
+  const handleRequest = async () => {
     if (!prompt.trim()) return;
     
-    const userMessage: HistoryItem = { id: Date.now().toString(), role: 'user', content: prompt };
+    const currentPrompt = prompt;
+    const userMessage: HistoryItem = { id: Date.now().toString(), role: 'user', content: currentPrompt };
     setHistory(prev => [...prev, userMessage]);
     setPrompt('');
     setIsGenerating(true);
 
-    // Mock LLM generation latency
-    setTimeout(() => {
-      const gText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum eget est quis volutpat. Nulla facilisi. Phasellus pellentesque eros est, vel placerat tellus sollicitudin congue.";
-      const assistantMessage: HistoryItem = { id: (Date.now()+1).toString(), role: 'assistant', content: gText };
+    try {
+      const workerUrl = import.meta.env.VITE_WORKER_URL || 'http://localhost:8787';
+      const response = await fetch(`${workerUrl}/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: currentPrompt })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate text');
+      }
+
+      const data = await response.json();
+      const generatedText = data.response;
+
+      const assistantMessage: HistoryItem = { id: (Date.now() + 1).toString(), role: 'assistant', content: generatedText };
       setHistory(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error(error);
+      const errorMessage: HistoryItem = { id: (Date.now() + 1).toString(), role: 'assistant', content: "Error: Could not generate text. Make sure the Worker is running." };
+      setHistory(prev => [...prev, errorMessage]);
+    } finally {
       setIsGenerating(false);
-    }, 1500);
+    }
   };
 
   const handleInsert = (text: string) => {

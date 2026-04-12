@@ -21,7 +21,7 @@ type RequestBody = {
 };
 
 const corsHeaders = {
-	"Access-Control-Allow-Origin": "*",
+	"Access-Control-Allow-Origin": "https://seoyeonghwang.github.io",
 	"Access-Control-Allow-Methods": "POST, GET, OPTIONS",
 	"Access-Control-Allow-Headers": "Content-Type",
 	"Content-Type": "application/json; charset=utf-8",
@@ -66,7 +66,7 @@ export default {
 				return new Response(
 					JSON.stringify({
 						ok: true,
-						message: "Worker is running. Send a POST request with baselineText and currentText.",
+						message: "Worker is running. Routes: POST / (embeddings), POST /generate (LLM text)",
 					}),
 					{
 						status: 200,
@@ -85,6 +85,32 @@ export default {
 				);
 			}
 
+			const url = new URL(request.url);
+
+			if (url.pathname === "/generate") {
+				const body = (await request.json()) as { prompt?: string };
+				const prompt = String(body?.prompt ?? "").trim();
+				if (!prompt) {
+					return new Response(JSON.stringify({ error: "prompt is required" }), { status: 400, headers: corsHeaders });
+				}
+
+				const messages = [
+					{ role: "system", content: "You are a helpful writing assistant. Write or rewrite text for the user. Do exactly as requested. Important: Provide only the raw text content without any conversational filler, introductory phrases (like 'Here is the text'), markdown formatting (unless specifically asked), or explanations. Act as a direct text generator." },
+					{ role: "user", content: prompt }
+				];
+
+				const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", { messages });
+				
+				return new Response(
+					JSON.stringify({
+						ok: true,
+						response: (result as { response?: string }).response || "No response generated.",
+					}),
+					{ status: 200, headers: corsHeaders }
+				);
+			}
+
+			// Default route: Semantic Embeddings
 			const body = (await request.json()) as RequestBody;
 			const baselineText = String(body?.baselineText ?? "").trim();
 			const currentText = String(body?.currentText ?? "").trim();
