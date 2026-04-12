@@ -1,0 +1,142 @@
+.right-panel-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.close-btn {
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: var(--text-main);
+}
+
+.history-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+}
+
+.history-item.user {
+  align-self: flex-end;
+}
+
+.history-item.user .message-bubble {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  border-bottom-right-radius: 4px;
+}
+
+.history-item.assistant {
+  align-self: flex-start;
+  width: 95%; /* Give it more room for the insert button below */
+}
+
+.history-item.assistant .message-bubble {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-bottom-left-radius: 4px;
+}
+
+.message-bubble {
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.message-bubble p {
+  margin: 0;
+}
+
+/* Secondary emphasis for insert button */
+.insert-btn {
+  margin-top: 8px;
+  background-color: transparent;
+  border: 1px solid var(--accent-orange);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  width: auto;
+  align-self: flex-start;
+  color: var(--accent-orange);
+  transition: all 0.2s ease;
+}
+.insert-btn:hover {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+.loading-state {
+  font-size: 14px;
+  color: var(--text-light);
+  align-self: flex-start;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.prompt-area {
+  padding: 16px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prompt-area textarea {
+  width: 100%;
+  resize: none;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.prompt-area textarea:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+}
+
+.request-btn {
+  background-color: var(--accent-orange);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  align-self: flex-end;
+  min-width: 100px;
+  transition: opacity 0.2s ease;
+}
+
+.request-btn:hover:not(:disabled) {
+  background-color: var(--accent-orange-hover);
+}
+
+.request-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,55 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  padding: 16px;
+  gap: 16px;
+  background-color: var(--bg-main);
+  box-sizing: border-box;
+}
+
+.panel {
+  background-color: var(--bg-panel);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-left {
+  width: 64px;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 24px 0;
+  gap: 24px;
+}
+
+.panel-center {
+  flex-grow: 1;
+  /* Fluid but with max-width content area inside */
+}
+
+.panel-right {
+  width: 360px;
+  flex-shrink: 0;
+}
+
+/* Common Header for Panels */
+.panel-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.panel-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}

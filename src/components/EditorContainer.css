@@ -1,0 +1,69 @@
+.editor-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-top-bar {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-ui);
+  color: var(--text-ui);
+}
+
+.cue-indicator {
+  font-size: 12px;
+  background-color: var(--bg-main);
+  padding: 4px 12px;
+  border-radius: 12px;
+  color: var(--text-light);
+}
+
+.editor-container {
+  flex-grow: 1;
+  position: relative;
+  font-family: var(--font-editor);
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-main);
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.editor-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100%;
+}
+
+.editor-input {
+  outline: none;
+  min-height: 500px;
+}
+
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 0;
+  left: 0;
+  font-size: 18px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.editor-paragraph {
+  margin: 0 0 16px 0;
+}
+
+/* Base styles for AI span handled by Lexical, but overrides here */
+.ai-attribution-span {
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  padding: 2px 0;
+}
