@@ -26,14 +26,55 @@
   gap: 24px;
 }
 
-.panel-center {
+.panel-main {
   flex-grow: 1;
+  min-width: 0;
   /* Fluid but with max-width content area inside */
 }
 
 .panel-right {
-  width: 360px;
+  position: relative;
   flex-shrink: 0;
+  overflow: visible;
+}
+
+.panel-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -16px;
+  z-index: 5;
+  width: 16px;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.panel-resize-handle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 56px;
+  border-radius: 4px;
+  background: var(--accent-orange);
+  box-shadow: 0 1px 4px rgba(249, 115, 22, 0.28);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.panel-resize-handle:hover::before,
+.panel-resize-handle:focus-visible::before,
+.is-resizing-right-panel .panel-resize-handle::before {
+  opacity: 1;
+  box-shadow: 0 1px 8px rgba(249, 115, 22, 0.42);
+  transform: translate(-50%, -50%) scaleX(1.2);
+}
+
+.is-resizing-right-panel {
+  cursor: col-resize;
+  user-select: none;
 }
 
 /* Common Header for Panels */

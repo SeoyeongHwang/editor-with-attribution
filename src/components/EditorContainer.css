@@ -14,7 +14,7 @@
   color: var(--text-ui);
 }
 
-.cue-indicator {
+.status-badge {
   font-size: 12px;
   background-color: var(--bg-main);
   padding: 4px 12px;

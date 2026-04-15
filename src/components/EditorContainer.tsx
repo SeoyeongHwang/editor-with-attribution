@@ -42,28 +42,28 @@ export default function EditorContainer({ cueMode, setActiveScores, activeScores
     <div className="editor-shell">
       <div className="editor-top-bar">
         <span>Semantic Attribution Editor</span>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <div className="cue-indicator">Current Mode: <strong>{cueMode.toUpperCase()}</strong></div>
-          {cueMode !== 'none' && (
-            <div className="score-indicator" style={{ 
-              fontSize: '12px', 
-              color: 'var(--text-light)', 
-              borderLeft: '1px solid var(--border-light)', 
-              paddingLeft: '16px',
-              opacity: (activeScores?.editRatio !== null || activeScores?.semanticScore !== null) ? 1 : 0.5
-            }}>
-              {cueMode === 'edit' && (
-                 activeScores?.editRatio !== null 
-                   ? <span><strong>Edit Ratio:</strong> {(activeScores.editRatio * 100).toFixed(0)}%</span>
-                   : <span>No AI text selected</span>
-              )}
-              {cueMode === 'semantic' && (
-                 activeScores?.semanticScore !== null 
-                   ? <span><strong>Semantic:</strong> {(activeScores.semanticScore * 100).toFixed(0)}%</span>
-                   : <span>No AI text selected</span>
-              )}
-            </div>
-          )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="status-badge" style={{ width: '190px', textAlign: 'center', whiteSpace: 'nowrap' }}>
+            Current Mode: <strong>{cueMode.toUpperCase()}</strong>
+          </div>
+          <div className="status-badge" style={{ 
+            width: '170px',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            opacity: cueMode === 'none' ? 0.3 : ((activeScores?.editRatio !== null || activeScores?.semanticScore !== null) ? 1 : 0.5)
+          }}>
+            {cueMode === 'edit' ? (
+               activeScores?.editRatio !== null 
+                 ? <span><strong>Edit Ratio:</strong> {(activeScores.editRatio * 100).toFixed(0)}%</span>
+                 : <span>No AI text selected</span>
+            ) : cueMode === 'semantic' ? (
+               activeScores?.semanticScore !== null 
+                 ? <span><strong>Semantic:</strong> {(activeScores.semanticScore * 100).toFixed(0)}%</span>
+                 : <span>No AI text selected</span>
+            ) : (
+               <span>Scores disabled</span>
+            )}
+          </div>
         </div>
       </div>
       <div className="editor-container">

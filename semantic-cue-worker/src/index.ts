@@ -99,7 +99,7 @@ export default {
 					{ role: "user", content: prompt }
 				];
 
-				const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", { messages });
+				const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct" as any, { messages });
 				
 				return new Response(
 					JSON.stringify({
